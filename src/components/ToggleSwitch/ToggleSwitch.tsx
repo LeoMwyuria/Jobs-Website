@@ -1,8 +1,15 @@
 import { useTheme } from "../ThemeContext/ThemeContext";
-
+import { useEffect } from "react";
 
 const ToggleSwitch = () => {
   const { isDarkMode, toggleDarkMode } = useTheme();
+
+  useEffect(() => {
+    const darkModeState = document.documentElement.classList.contains('dark');
+    if (darkModeState !== isDarkMode) {
+      toggleDarkMode();
+    }
+  }, []);
 
   return (
     <div 

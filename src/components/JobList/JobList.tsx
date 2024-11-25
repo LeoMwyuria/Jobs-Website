@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import JobCard from '../JobCard/JobCard';
 
 interface Job {
@@ -24,7 +24,6 @@ interface JobListProps {
 
 const JobList = ({ searchFilters }: JobListProps) => {
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,37 +49,36 @@ const JobList = ({ searchFilters }: JobListProps) => {
     fetchJobs();
   }, []);
 
-  useEffect(() => {
-    const filtered = jobs.filter(job => {
+  const filteredJobs = useMemo(() => {
+    return jobs.filter(job => {
       const jobTitle = job.title.toLowerCase();
       const jobCompany = job.companyName.toLowerCase();
       const jobLocation = job.location.toLowerCase();
       const searchKeyword = searchFilters.keyword.toLowerCase();
       const searchLocation = searchFilters.location.toLowerCase();
-  
+
       const keywordMatch = !searchKeyword || 
         jobTitle.includes(searchKeyword) || 
         jobCompany.includes(searchKeyword);
-  
+
       const locationMatch = !searchLocation || 
         jobLocation.includes(searchLocation);
-  
+
       const typeMatch = !searchFilters.fullTimeOnly || 
         job.type === "Full Time";  
-  
+
       return keywordMatch && locationMatch && typeMatch;
     });
-  
-    setFilteredJobs(filtered);
-    setCurrentPage(1);
   }, [jobs, searchFilters]);
 
-  const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
-  const currentJobs = filteredJobs.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const totalPages = useMemo(() => Math.ceil(filteredJobs.length / itemsPerPage), [filteredJobs.length]);
 
+  const currentJobs = useMemo(() => {
+    return filteredJobs.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+  }, [filteredJobs, currentPage]);
 
   if (loading) {
     return (
@@ -101,7 +99,7 @@ const JobList = ({ searchFilters }: JobListProps) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {currentJobs.map((job) => (
         <JobCard
           key={job.id}

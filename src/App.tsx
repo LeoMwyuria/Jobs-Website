@@ -19,7 +19,7 @@ function App() {
     <ThemeProvider>
       <div className="min-h-screen transition-colors duration-300 dark:bg-darkBg">
         <Header />
-        <div className="w-[61%] ml-auto mr-auto">
+        <div className="w-[90%] md:w-[80%] lg:w-[61%] ml-auto mr-auto">
           <JobSearch onSearch={handleSearch} />
           <br />
           <JobList searchFilters={searchFilters} />

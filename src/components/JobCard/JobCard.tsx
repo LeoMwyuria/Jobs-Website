@@ -31,8 +31,13 @@ const JobCard = ({ id, companyName, logoUrl, timeAgo, title, location, type, req
         });
     };
     return (
-      <div onClick={toJobClick} className="bg-white dark:bg-darkCard rounded-md p-8 relative shadow-sm hover:shadow-md transition-colors duration-300 cursor-pointer">
-
+      <div 
+  onClick={toJobClick} 
+  style={{
+    animation: `fadeIn 0.5s ease-out`
+  }}
+  className="bg-white dark:bg-darkCard rounded-md p-8 relative shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 cursor-pointer"
+>
         <div className="absolute -top-6 left-8">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center" >
             <img src={logoUrl} alt={companyName} className="w-[100%] h-[100%] rounded-xl object-contain" />
