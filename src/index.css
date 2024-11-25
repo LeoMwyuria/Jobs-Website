@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-[#EEE] dark:bg-darkBg transition-colors duration-300;
+  font-family: 'Kumbh Sans';
+}
+
+header {
+  background-image: url('./assets/headerTriangle.png'), url('./assets/triangle2.png'), url('./assets/triangle3.png');
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: center top, left bottom, right top;
+  background-size: auto, auto, auto;
+}
+
