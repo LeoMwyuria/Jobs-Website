@@ -33,7 +33,7 @@ const JobList = ({ searchFilters }: JobListProps) => {
     const fetchJobs = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`https://jobs-api-7iu1.onrender.com/jobs`);
+        const response = await fetch(`https://jobs-api-0t3l.onrender.com/jobs`);
         if (!response.ok) {
           throw new Error('Failed to fetch jobs');
         }
